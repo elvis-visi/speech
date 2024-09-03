@@ -2,15 +2,29 @@ import { Router } from 'express';
 import Transcription from '../models/Transcription.js';
 import User from '../models/User.js';
 
+import jwt from 'jsonwebtoken'
+
+const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.startsWith('Bearer ')) {
+      return authorization.replace('Bearer ', '')
+    }
+    return null
+  }
+
 const transcriptionsRouter = Router();
 
 transcriptionsRouter.post('/', async (request, response) => {
     const { userId, text, audioFileUrl, language } = request.body;
 
     try {
-        const userFound = await User.findById(userId);
+        const decodedToken = jwt.verify(getTokenFrom(request), process.env.JWT_SECRET)
+        if (!decodedToken.id) {
+            return response.status(401).json({ error: 'token invalid' })
+        }
+        const user = await User.findById(decodedToken.id)
 
-        if (!userFound) {
+        if (!user) {
             return response.status(404).json({ error: 'User not found' });
         }
 
@@ -22,8 +36,8 @@ transcriptionsRouter.post('/', async (request, response) => {
         });
 
         const savedTranscription = await transcription.save();
-        userFound.transcriptions = userFound.transcriptions.concat(savedTranscription._id);
-        await userFound.save();
+        user.transcriptions = user.transcriptions.concat(savedTranscription._id);
+        await user.save();
 
         response.status(201).json(savedTranscription);
     } catch (error) {
