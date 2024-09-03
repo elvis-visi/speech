@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import { errorHandler } from './utils/middleware.js';
+
 dotenv.config();
 
 import usersRouter from './controllers/users.js';
@@ -20,6 +22,8 @@ app.use(express.json());
 // Add routes here
 app.use('/api/users', usersRouter)
 app.use('/api/transcriptions',transcriptionsRouter)
-app.use('/api/login',loginRouter)
+app.use('/api/login', loginRouter)
+
+app.use(errorHandler)
 
 export default app;
