@@ -1,0 +1,4 @@
+   # Server specific ignores
+   server/node_modules/
+   server/.env
+   server/*.log
