@@ -5,7 +5,8 @@ import User from '../models/User.js';
 const usersRouter = Router();
 
 usersRouter.get('/', async (request, response) => {
-  const users = await User.find({})
+  const users = await User
+    .find({}).populate('transcriptions', { text: 1, audioFileUrl: 1, language: 1 })
   response.json(users)
 })
 
