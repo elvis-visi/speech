@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 /**
  * Transcription Schema
@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
  */
 
 const transcriptionSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
@@ -44,4 +44,4 @@ transcriptionSchema.set('toJSON', {
 
 const Transcription = mongoose.model('Transcription', transcriptionSchema);
 
-module.exports = Transcription;
+export default Transcription;
