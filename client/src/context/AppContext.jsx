@@ -1,7 +1,8 @@
 // context - It's a way for a parent component provide data to the entire tree below it
 //reducer - takes current state and an action as args, retuns a new state
-import React, { createContext, useReducer, useContext } from 'react';
-
+import React, { createContext, useReducer, useEffect } from 'react';
+import axios from 'axios';
+import { checkAuthStatus } from '../services/auth';
 /**
  * @typedef {Object} AppState
  * @property {Object|null} user - The current user object or null if not logged in
@@ -75,9 +76,15 @@ export function AppProvider({ children }) {
     // state- current state, dispatch - function you can send/dispatch actions to the reducer
   const [state, dispatch] = useReducer(appReducer, initialState);
 
+  useEffect(() => {
+    checkAuthStatus(dispatch);
+  }, []);
+
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       {children}
     </AppContext.Provider>
   );
 }
+
+export { AppContext };

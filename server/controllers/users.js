@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Router } from 'express';
 import User from '../models/User.js';
+import { getUser } from '../utils/middleware.js';
 
 const usersRouter = Router();
 
@@ -33,6 +34,11 @@ usersRouter.post('/', async (request, response, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+usersRouter.get('/me', getUser, async (request, response) => {
+  // The user object is attached to the request by the getUser middleware
+  response.json(request.user);
 });
 
 export default usersRouter;

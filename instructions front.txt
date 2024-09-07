@@ -1,3 +1,6 @@
+use my own pc as a server initially. host it online.
+
+
 Frontend
 
 
