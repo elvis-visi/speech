@@ -112,5 +112,10 @@ export const setUser = (user) => ({
   payload:user,
 })
 
+export const addTranscription = (transcription) => ({
+  type: 'ADD_TRANSCRIPTION',
+  payload: transcription,
+});
+
 
 export { AppContext };
