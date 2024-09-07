@@ -87,4 +87,30 @@ export function AppProvider({ children }) {
   );
 }
 
+// actionCreators.js
+/**
+ * Action creator for setting transcriptions in the app state
+ * @function
+ * @param {Array} transcriptions - The array of transcriptions to set
+ * @returns {Object} An action object with type 'SET_TRANSCRIPTIONS' and the transcriptions as payload
+ */
+
+
+export const setTranscriptions = (transcriptions) => ({
+  type: 'SET_TRANSCRIPTIONS',
+  payload: transcriptions,
+});
+
+/**
+ * Action creator for setting the user in the app state
+ * @function
+ * @param {Object|null} user - The user object to set, or null to clear the user
+ * @returns {Object} An action object with type 'SET_USER' and the user as payload
+ */
+export const setUser = (user) => ({
+  type: 'SET_USER',
+  payload:user,
+})
+
+
 export { AppContext };

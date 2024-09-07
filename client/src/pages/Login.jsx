@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../services/login';
 import { AppContext } from '../context/AppContext';
 
+import { setUser } from '../context/AppContext'
+
 /**
  * Login component for user authentication
  * @component
@@ -25,7 +27,7 @@ const Login = () => {
     setError('');
     try {
       const user = await login({ username, password });
-      dispatch({ type: 'SET_USER', payload: user });
+      dispatch(setUser(user));
       navigate('/dashboard');
     } catch (error) {
       console.error('Login failed:', error);

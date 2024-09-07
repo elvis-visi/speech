@@ -2,6 +2,8 @@ import React, { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { getTranscriptions } from '../services/transcriptions';
 
+import { setTranscriptions } from '../context/AppContext';
+
 const Dashboard = () => {
   const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ const Dashboard = () => {
     const fetchTranscriptions = async () => {
       try {
         const transcriptions = await getTranscriptions();
-        dispatch({ type: 'SET_TRANSCRIPTIONS', payload: transcriptions });
+        dispatch(setTranscriptions(transcriptions))
         setLoading(false);
       } catch (err) {
         console.error('Error fetching transcriptions:', err);

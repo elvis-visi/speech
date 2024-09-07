@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { setUser } from '../context/AppContext';
 
 /**
  * Sets the authentication data in localStorage and axios headers
@@ -40,7 +40,7 @@ export const checkAuthStatus = async (dispatch) => {
     setAuthData(authData);
     try {
       const response = await axios.get('/api/users/me');
-      dispatch({ type: 'SET_USER', payload: response.data });
+      dispatch(setUser(response.data));
     } catch (error) {
       console.error('Error fetching user data:', error);
       setAuthData(null);
