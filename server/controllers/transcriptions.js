@@ -34,9 +34,10 @@ transcriptionsRouter.post('/', getUser, async (request, response, next) => {
     }
 });
 
-transcriptionsRouter.get('/', async (request, response) => {
+transcriptionsRouter.get('/', getUser, async (request, response) => {
     try {
-        const transcriptions = await Transcription.find({})
+        const user = request.user
+        const transcriptions = await Transcription.find({userId: user._id})
             .populate('userId', { username: 1 });
         response.json(transcriptions);
     } catch (error) {
